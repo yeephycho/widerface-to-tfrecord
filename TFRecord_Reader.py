@@ -8,18 +8,18 @@ def read_and_decode():
     features = tf.parse_single_example(
             serialized_example,
             features={
-                'image/height': tf.FixedLenFeature([], tf.int64),
-                'image/width': tf.FixedLenFeature([], tf.int64),
-                'image/filename': tf.FixedLenFeature([], tf.string),
-                'image/source_id': tf.FixedLenFeature([], tf.string),
-                'image/encoded': tf.FixedLenFeature([], tf.string),
-                'image/format': tf.FixedLenFeature([], tf.string),
-                'image/object/bbox/xmin': tf.FixedLenFeature([], tf.float32),
-                'image/object/bbox/xmax': tf.FixedLenFeature([], tf.float32),
-                'image/object/bbox/ymin': tf.FixedLenFeature([], tf.float32),
-                'image/object/bbox/ymax': tf.FixedLenFeature([], tf.float32),
-                'image/object/class/text': tf.FixedLenFeature([], tf.string),
-                'image/object/class/label': tf.FixedLenFeature([], tf.int64)
+                'image/height': tf.FixedLenFeature((), tf.int64, 1),
+                'image/width': tf.FixedLenFeature((), tf.int64, 1),
+                'image/filename': tf.FixedLenFeature((), tf.string, default_value=''),
+                'image/source_id': tf.FixedLenFeature((), tf.string, default_value=''),
+                'image/encoded': tf.FixedLenFeature((), tf.string, default_value=''),
+                'image/format': tf.FixedLenFeature((), tf.string, default_value='jpg'),
+                'image/object/bbox/xmin': tf.VarLenFeature(tf.float32),
+                'image/object/bbox/xmax': tf.VarLenFeature(tf.float32),
+                'image/object/bbox/ymin': tf.VarLenFeature(tf.float32),
+                'image/object/bbox/ymax': tf.VarLenFeature(tf.float32),
+                'image/object/class/text': tf.VarLenFeature(tf.string),
+                'image/object/class/label': tf.VarLenFeature(tf.int64)
                 }
             )
     image = tf.image.decode_jpeg(features['image/encoded'])
@@ -40,7 +40,7 @@ with tf.Session() as sess:
     sess.run(tf.global_variables_initializer())
     coord = tf.train.Coordinator()
     threads = tf.train.start_queue_runners(coord=coord)
-    for i in range(1):
+    for i in range(3):
         image_out, label_out, xmin_out, xmax_out = sess.run([image, label, xmin, xmax])
         print(image_out.shape)
         print(label_out)
@@ -49,4 +49,3 @@ with tf.Session() as sess:
 
     coord.request_stop()
     coord.join(threads)
-
