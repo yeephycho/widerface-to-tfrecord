@@ -15,10 +15,10 @@ git clone https://github.com/yeephycho/widerface-to-tfrecord.git
 cd ~/widerface-to-tfrecord
 ```
 ## Create simbolic link to WIDER FACE dataset
-Unzip .zip file to folder "~/WIDER/WIDER_train" and make sure "wider_face_train_annot.txt" is under folder "~/WIDER".
+Unzip .zip file to folder "\~/WIDER/WIDER_train" and make sure "wider_face_train_annot.txt" is under folder "\~/WIDER".
 
 ``` bash
-ln -s ~/WIDER ./widerface-to-tfrecord/WIDER
+ln -s \~/WIDER ./widerface-to-tfrecord/WIDER
 ```
 
 ## Run the script
