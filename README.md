@@ -18,7 +18,7 @@ cd ~/widerface-to-tfrecord
 Unzip .zip file to folder "\~/WIDER/WIDER_train" and make sure "wider_face_train_annot.txt" is under folder "\~/WIDER".
 
 ``` bash
-ln -s \~/WIDER ./widerface-to-tfrecord/WIDER
+ln -s ~/WIDER ./widerface-to-tfrecord/WIDER
 ```
 
 ## Run the script
