@@ -40,7 +40,7 @@ def parse_example(f):
   print(filepath)
   image_raw = cv2.imread(filepath)
 
-  encoded_image_data = open(filepath).read()
+  encoded_image_data = open(filepath, 'rb').read()# incase TypeError showed up
   key = hashlib.sha256(encoded_image_data).hexdigest()
 
   height, width, channel = image_raw.shape
@@ -58,7 +58,7 @@ def parse_example(f):
             ymins.append( max(0.005, (float(annot[1]) / height) ) )
             xmaxs.append( min(0.995, ((float(annot[0]) + float(annot[2])) / width) ) )
             ymaxs.append( min(0.995, ((float(annot[1]) + float(annot[3])) / height) ) )
-            classes_text.append('face')
+            classes_text.append('face'.encode('utf-8'))# string type 'face' need to be changed into byte type
             classes.append(1)
             poses.append("front".encode('utf8'))
             truncated.append(int(0))
